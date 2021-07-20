@@ -1,0 +1,197 @@
+{
+  "settings": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.detectIndentation": true,
+    "editor.fontFamily": "'Dank Mono', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": false,
+    "editor.tabSize": 2,
+    "editor.rulers": [80],
+    "editor.snippetSuggestions": "top",
+    "editor.wordBasedSuggestions": false,
+    "editor.suggest.localityBonus": true,
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.suggestSelection": "recentlyUsed",
+      "editor.suggest.showKeywords": false
+    },
+    "editor.renderWhitespace": "boundary",
+    "files.exclude": {
+      "USE_GITIGNORE": true
+    },
+    "files.defaultLanguage": "{activeEditorLanguage}",
+    "javascript.validate.enable": false,
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/coverage": true,
+      "**/dist": true,
+      "**/build": true,
+      "**/.build": true,
+      "**/.gh-pages": true
+    },
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": false
+    },
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+    ],
+    "eslint.options": {
+      "env": {
+        "browser": true,
+        "jest/globals": true,
+        "es6": true
+      },
+      "parserOptions": {
+        "ecmaVersion": 2019,
+        "sourceType": "module",
+        "ecmaFeatures": {
+          "jsx": true
+        }
+      },
+      "rules": {
+        "no-debugger": "off"
+      }
+    },
+    "workbench.colorTheme": "Radical",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorCustomizations": {
+      "editor.background": "#000",
+      "editor.findMatchBackground": "#000",
+      "editor.findRangeHighlightBackground": "#000",
+      "editor.hoverHighlightBackground": "#000",
+      "editor.inactiveSelectionBackground": "#000",
+      "peekViewEditorGutter.background": "#000",
+      "activityBar.background": "#000",
+      "breadcrumb.background": "#000",
+      // "menu.background": "#000",
+      "badge.background": "#000",
+      "panel.background": "#000",
+      "sideBar.background": "#000",
+      "dropdown.background": "#000",
+      "terminal.background": "#000",
+      "tab.activeBackground": "#000",
+      "tab.inactiveBackground": "#000",
+      "editor.foldBackground": "#000",
+      "editorPane.background": "#000",
+      "dropdown.listBackground": "#000",
+      "panelSection.dropBackground": "#000"
+    },
+    "editor.tokenColorCustomizations": {
+      // "variables": "#f88d91",
+      "functions": "#54aaff",
+      "strings": "#CDD0D1",
+      "textMateRules": [
+        {
+          "scope": "keyword.operator",
+          "settings": {
+            "foreground": "#0942ff",
+            "fontStyle": "italic"
+          }
+        },
+        {
+          "scope": "constant.character",
+          "settings": {
+            "foreground": "#ff0000",
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "scope": "keyword.operator",
+          "settings": {
+            "foreground": "#FF6D6A",
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "scope": "keyword.other",
+          "settings": {
+            "foreground": "#3b9dff"
+          }
+        },
+        {
+          "scope": "entity",
+          "settings": {
+            "foreground": "#62eb22",
+            "fontStyle": "italic"
+          }
+        },
+        {
+          "scope": "meta",
+          "settings": {
+            "foreground": "#FF6D6A"
+            // "fontStyle": "bold"
+          }
+        },
+        {
+          "scope": "variable.other.readwrite",
+          "settings": {
+            "foreground": "#93fcc2"
+            // "fontStyle": "bold"
+          }
+        },
+        {
+          "scope": "variable",
+          "settings": {
+            "foreground": "#f9a9fc"
+            // "fontStyle": "bold"
+          }
+        },
+        {
+          "scope": "source.js",
+          "settings": {
+            "foreground": "#48d308"
+            // "fontStyle": "bold"
+          }
+        },
+        {
+          "scope": "string.quoted",
+          "settings": {
+            "foreground": "#fddb96",
+            "fontStyle": "italic"
+          }
+        },
+        {
+          "scope": "constant",
+          "settings": {
+            "foreground": "#43b4019c",
+            "fontStyle": "italic"
+          }
+        },
+        {
+          "scope": [
+            "support.class.component.open.jsx", // JSX Component
+            "support.class.component.close.jsx"
+          ],
+          "settings": {
+            "foreground": "#9eff1f",
+            "fontStyle": "bold"
+          }
+        },
+        {
+          "scope": [
+            "entity.name.tag.open.jsx", // Regular JSX/HTML tag
+            "entity.name.tag.close.jsx"
+          ],
+          "settings": {
+            "foreground": "#d32082"
+          }
+        }
+      ]
+    },
+    "breadcrumbs.enabled": true,
+    "grunt.autoDetect": "off",
+    "gulp.autoDetect": "off",
+    "npm.runSilent": true,
+    "explorer.confirmDragAndDrop": false,
+    "editor.formatOnPaste": false,
+    "editor.cursorSmoothCaretAnimation": true,
+    "editor.smoothScrolling": true,
+    "php.suggest.basic": false,
+    "editor.semanticHighlighting.enabled": false
+  }
+}
