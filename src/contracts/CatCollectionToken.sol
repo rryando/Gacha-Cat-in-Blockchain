@@ -1,9 +1,14 @@
 pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
 
 contract CatCollectionToken {
     string public name;
     uint public issuedCat = 0;
+    // address[] public collectionOwner;
+
+    // mapping(address => CatCollection) public catCollection;
     mapping(string => CatCollection) public catCollection;
+    mapping(address => CatCollection[]) public catCollectionByOwner;
 
     struct CatCollection {
         string id;
@@ -50,8 +55,20 @@ contract CatCollectionToken {
         issuedCat ++;
         // Create the post
         catCollection[id] = CatCollection(id, imgUrl, description, catName, 0, msg.sender);
+        catCollectionByOwner[msg.sender].push(CatCollection(id, imgUrl, description, catName, 0, msg.sender));
+        // collectionOwner[msg.sender].push(catCollection[id]);
         // Trigger event
         emit CatIssued(id, imgUrl, description, catName, 0, msg.sender);
+    }
+
+    function getCollectionByOwner(address _owner) public view returns(CatCollection[] memory){
+      CatCollection[] memory temp = new CatCollection[](catCollectionByOwner[_owner].length);
+      for (uint i = 0; i<catCollectionByOwner[_owner].length; i++) {
+        // return catCollectionByOwner[_owner][i]; 
+        temp[i] = catCollectionByOwner[_owner][i]; 
+      }
+
+      return (temp);
     }
 
     function tipCat(string memory _id) public payable {

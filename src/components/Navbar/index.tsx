@@ -9,7 +9,7 @@ const NavbarComponents = (props: any) => {
   const [activeItem, setActiveItem] = React.useState("home")
   const handleMenuClick = (menu: string) => setActiveItem(menu)
   const checkActiveItem = (menu: string) => location.pathname.includes(menu)
-  console.log(props)
+  console.log(props.catCollection)
   return (
     <Segment inverted style={{ borderRadius: 0 }}>
       <Menu inverted secondary>
@@ -67,8 +67,10 @@ const NavbarComponents = (props: any) => {
           >
             <Segment inverted>
               <span style={{ marginRight: 20 }}>😼 MyCat</span>
-              <Label color="teal">0</Label>
-              <Dimmer active inverted>
+              <Label color="teal">
+                {props.catCollection && props.catCollection.length}
+              </Label>
+              <Dimmer active={props.isWeb3Loading} inverted>
                 <Loader />
               </Dimmer>
             </Segment>

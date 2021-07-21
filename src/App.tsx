@@ -7,15 +7,64 @@ import GachaPage from "pages/Gacha"
 import MyCatPage from "pages/MyCat"
 import NavbarComponents from "components/Navbar"
 import Web3 from "web3"
-import GachaCatToken from "abis/GachaCatToken.json"
+import CatCollectionToken from "abis/CatCollectionToken.json"
+import { ModelGachaResult } from "models/ModelGacha"
 
 declare let window: any
 
 function App() {
+  const [isWeb3Loading, setWeb3Loading] = useState(true)
   const [account, setAccount] = useState<string>("0x0")
   const [token, setToken] = useState(null)
-  const [totalSupply, setTotalSupply] = useState<number>(0)
+  const [catCollection, setCatCollection] = useState<ModelGachaResult[]>()
+  const [issuedCat, setIssuedCat] = useState()
   const [tokenURIs, setTokenURIs] = useState([])
+
+  const loadBlockchainData = async () => {
+    const web3 = window.web3
+    const accounts = await web3.eth.getAccounts()
+    setAccount(accounts[0])
+
+    const networkId = await web3.eth.net.getId()
+    // @ts-ignore
+    const networkData = CatCollectionToken.networks[networkId]
+    if (networkData) {
+      const abi = CatCollectionToken.abi
+      const address = networkData.address
+      const token = new web3.eth.Contract(abi, address)
+      setToken(token)
+
+      // const totalSupply = await token.methods.totalSupply().call()
+      // setTotalSupply(totalSupply)
+      // Load Tokens
+      let catCollection = await token.methods
+        .getCollectionByOwner(accounts[0])
+        .call()
+
+      let issuedCat = await token.methods.issuedCat().call()
+      setIssuedCat(issuedCat)
+      // console.log("collection: ", catCollection)
+      let collection = []
+      for (let i = 0; i < catCollection.length; i++) {
+        const { id, catName, description, imgUrl, owner, tipAmount } =
+          catCollection[i]
+
+        // console.log(catCollection)
+        collection[i] = {
+          id,
+          name: catName,
+          description,
+          imgUrl,
+          owner,
+          tipAmount,
+        }
+      }
+
+      setCatCollection(collection)
+    } else {
+      alert("Smart contract not deployed to detected network.")
+    }
+  }
 
   React.useEffect(() => {
     const loadWeb3 = async () => {
@@ -31,39 +80,11 @@ function App() {
       }
     }
 
-    const loadBlockchainData = async () => {
-      const web3 = window.web3
-      const accounts = await web3.eth.getAccounts()
-      setAccount(accounts[0])
-
-      const networkId = await web3.eth.net.getId()
-      // @ts-ignore
-      const networkData = GachaCatToken.networks[networkId]
-      if (networkData) {
-        const abi = GachaCatToken.abi
-        const address = networkData.address
-        const token = new web3.eth.Contract(abi, address)
-        setToken(token)
-
-        const totalSupply = await token.methods.totalSupply().call()
-        setTotalSupply(totalSupply)
-        // Load Tokens
-        let balanceOf = await token.methods.balanceOf(accounts[0]).call()
-        for (let i = 0; i < balanceOf; i++) {
-          let id = await token.methods
-            .tokenOfOwnerByIndex(accounts[0], i)
-            .call()
-          let tokenURI = await token.methods.tokenURI(id).call()
-
-          setTokenURIs(tokenURI)
-        }
-      } else {
-        alert("Smart contract not deployed to detected network.")
-      }
-    }
+    const loadBlockchainWeb3Data = async () => await loadBlockchainData()
 
     loadWeb3()
-    loadBlockchainData()
+    loadBlockchainWeb3Data()
+    setWeb3Loading(false)
   }, [])
 
   return (
@@ -72,7 +93,8 @@ function App() {
         <NavbarComponents
           account={account}
           token={token}
-          totalSupply={totalSupply}
+          catCollection={catCollection}
+          isWeb3Loading={isWeb3Loading}
         />
         <Container inverted textAlign="center">
           <Switch>
@@ -80,13 +102,23 @@ function App() {
               <IndexPage />
             </Route>
             <Route path="/gacha" exact>
-              <GachaPage />
+              <GachaPage
+                account={account}
+                token={token}
+                refreshBlockchain={loadBlockchainData}
+              />
             </Route>
             <Route path="/swap" exact>
               <IndexPage />
             </Route>
             <Route path="/MyCat" exact>
-              <MyCatPage tokenURIs={tokenURIs} />
+              <MyCatPage
+                tokenURIs={tokenURIs}
+                account={account}
+                token={token}
+                catCollection={catCollection}
+                isWeb3Loading={isWeb3Loading}
+              />
             </Route>
           </Switch>
         </Container>
